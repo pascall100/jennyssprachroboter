@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schulhof-Programmierung</title>
+   
+</head>
+<body>
+    <h3>Text</h3>
+    <input type="text" id="text-to-speak" placeholder="Gib hier deinen Text ein">
+    
+    <!-- Dropdown für Sprachauswahl -->
+    <select id="language-select">
+        <option value="de-DE">Deutsch</option>
+        <option value="fr-FR">Français</option>
+        <option value="es-ES">Español</option>
+        <option value="en-US">English</option>
+
+        <!-- Weitere Sprachen können hinzugefügt werden -->
+    </select>
+    
+    <button id="speak-button">Sprechen</button>
+    <button id="clear-button">löschen </button>
+
+    <script>
+        const textToSpeak = document.getElementById("text-to-speak");
+        const speakButton = document.getElementById("speak-button");
+        const clearButton = document.getElementById("clear-button");
+        const languageSelect = document.getElementById("language-select");
+
+        if ('speechSynthesis' in window) {
+            const synth = window.speechSynthesis;
+
+            speakButton.addEventListener('click', function() {
+                const text = textToSpeak.value;
+                const language = languageSelect.value; // Die ausgewählte Sprache aus dem Dropdown-Menü
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = language;
+
+                synth.speak(utterance);
+            });
+
+            clearButton.addEventListener('click', function() {
+                textToSpeak.value = ''; // Text im Eingabefeld löschen
+            });
+        } else {
+            alert('Text-to-speech is not supported in your browser. Please use a different browser.');
+        }
+    </script>
+</body>
+</html>
+
+
+
